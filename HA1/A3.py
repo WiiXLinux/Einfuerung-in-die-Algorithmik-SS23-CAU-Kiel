@@ -14,6 +14,7 @@ def mergesort(l: list) -> list:
 
 
 # Imperative mergesort from HA3.2
+# Sorts a list containing integers by size.
 def mergesort2(l: list) -> list:
     # Initialise two helper lists. temp will store the lists before merging, and temp2 will store the lists after
     # merging.
@@ -43,44 +44,57 @@ def mergesort2(l: list) -> list:
         # to reset temp2, so that we can add elements to temp2 while not storing the old elements (which are now in
         # temp).
         temp2 = []
-
+    # returns the first element of temp which is equivalent to the sorted list, since temp now contains a list that
+    # is the sorted list. TLDR: Removes some brackets.
     return temp[0]
 
 
 # Merge function of HA3.1
 def merge(l1: list, l2: list) -> list:
+    # i and j will be pointing to the first elements of the lists l1 and l2, that have not been inserted into temp.
     j = 0
     i = 0
+    # temp will be returned after filling it with a sorted sequence. For now, it will be initialized as a list with
+    # same size as the two original lists combined.
     temp = [0] * (len(l1) + len(l2))
 
+    # Stop when we run out of numbers.
     while i + j < len(l1) + len(l2):
+        # If we have only run out of numbers from l1...
         if i > len(l1) - 1:
+            # ... fill temp with the remaining numbers of l2
             for a in range(i + j, len(temp)):
                 temp[a] = l2[a - i]
             return temp
+        # If we else have only run out of numbers from l2...
         elif j > len(l2) - 1:
+            # ... fill temp with the remaining numbers of l1
             for a in range(i + j, len(temp)):
                 temp[a] = l1[a - j]
             return temp
-
+        # If the current number of l2 is bigger than the number of l1...
         if l1[i] < l2[j]:
+            # ... insert this number into the new list.
             temp[i + j] = l1[i]
             i += 1
+        # If not... (If the number of l1 is bigger or equal than the number of l2)
         else:
+            # ... insert that number into the new list.
             temp[i + j] = l2[j]
             j += 1
-
+    # Now we return the completed list.
     return temp
 
 
-def randomIntList(size, a, b):
-    temp = [0] * size
-    for i in range(0, size):
-        temp[i] = random.randint(a, b)
-    return temp
+# Simple method to generate random integer lists.
+def random_list(size: int, min: int, max: int) -> list:
+    l = [None] * size
+    for i in range(len(l)):
+        l[i] = random.randint(min, max)
+    return l
 
 
 # Prints two examples (with newline for more readability of the output)
 print(mergesort2([5, 3, 7, 2, 8, 1, 6, 4, 9]), "\n")
 print(mergesort2([5, 3, 7, 2, 8, 1, 6, 4]), "\n")
-print(mergesort2(randomIntList(9, 0, 9)))
+print(mergesort2(random_list(9, 0, 9)))
