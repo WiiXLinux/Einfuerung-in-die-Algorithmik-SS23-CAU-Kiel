@@ -4,7 +4,7 @@
 import random
 
 
-# Simple method to generate random lists
+# Simple method to generate random integer lists.
 def random_list(size: int, min: int, max: int) -> list:
     l = [None] * size
     for i in range(len(l)):
