@@ -3,6 +3,7 @@
 
 import math
 import random
+import time
 
 
 # Recursive mergesort as contrast
@@ -98,3 +99,17 @@ def random_list(size: int, min: int, max: int) -> list:
 print(mergesort2([5, 3, 7, 2, 8, 1, 6, 4, 9]), "\n")
 print(mergesort2([5, 3, 7, 2, 8, 1, 6, 4]), "\n")
 print(mergesort2(random_list(9, 0, 9)))
+
+
+def benchmark(func, args):
+    before = time.time()
+    func(args)
+    after = time.time()
+    return after - before
+
+
+# Gives 0.02844524383544922 on my machine. (the print in L41 was removed)
+print(benchmark(mergesort, random_list(7000, 0, 9)))
+
+# Gives 0.025584697723388672 on my machine. (the print in L41 was removed)
+print(benchmark(mergesort2, random_list(7000, 0, 9)))

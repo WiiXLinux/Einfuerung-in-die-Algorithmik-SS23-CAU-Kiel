@@ -3,6 +3,7 @@
 
 import math
 import random
+import time
 
 
 # We reuse this function, because it is already pretty effective. Only creates one list.
@@ -102,3 +103,12 @@ def mergesort_almost_in_place(l: list) -> list:
 print(mergesort_almost_in_place([4, 6, 8, 2, 5, 3, 1, 7]))
 print(mergesort_almost_in_place([4, 6, 8, 2, 5, 3, 5, 1, 7]))
 print(mergesort_almost_in_place(random_list(10, 0, 9)))
+
+def benchmark(func, args):
+    before = time.time()
+    func(args)
+    after = time.time()
+    return after - before
+
+# Gives 0.03291511535644531 on my machine.
+print(benchmark(mergesort_almost_in_place, random_list(7000, 0, 9)))

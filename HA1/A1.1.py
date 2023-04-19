@@ -2,6 +2,7 @@
 # still read them. (like here for example :))
 
 import random
+import time
 
 
 # Simple method to generate random integer lists.
@@ -109,3 +110,12 @@ def hungarian_quicksort(l: list) -> list:
 print(hungarian_quicksort(random_list(10, 0, 9)))
 # Example used in the video.
 print(hungarian_quicksort([3, 0, 1, 8, 7, 2, 5, 4, 9, 6]))
+
+def benchmark(func, args):
+    before = time.time()
+    func(args)
+    after = time.time()
+    return after - before
+
+# Gives 0.22223925590515137 on my machine.
+print(benchmark(hungarian_quicksort, random_list(7000, 0, 9)))
