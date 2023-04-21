@@ -1,5 +1,13 @@
-# STILL TODO
-
+'''
+The following code contains a modified version of quicksort using so called three-way-partitioning. 
+Best-Case Runtime of this algorithm is O(n log(n)) (n being the number of elements in the list)
+Worst-Case Runtime in the unmodified version of this algorithm is O(n^2) in case of lists containing only the same elements. 
+In this version however, whenever the currently checked item is equal to the pivot, no swap will happen. 
+This is resulting in an optimized runtime of O(n) for any case where all items in a given list are equal to each other.
+Furthermore the recursion depth is as low as possible in this version, because in case of an all-same-items-lists 
+lt and gt will never move from their start-, respectively, end-positions, so qsort_h() will only call itself once 
+for both recursions. 
+'''
 import random
 
 def swap(l,i,j):
@@ -12,42 +20,39 @@ def swap(l,i,j):
 
 def quicksort(l):
     '''
-    sort given list with algorithm quicksort using three-way partitioning.
+    Sort given list using three way quicksort
     '''
-    def qsort_h(start,end):
+    def qsort_h(start, end):
         if start < end:
+            # Choose pivot randomly
+            pivot_idx = random.randint(start, end)
+            pivot = l[pivot_idx]
             '''
-            define pivot first using a random index within the list
-            then initialize less-than (lt) and greater-than (gt) as markers for partitions
-            initialize m as counting variable
+            Initialize lt and gt as markers for partitions.
+            Initialize m as a counting variable.
             '''
-            pivot = l[random.randint(start, end -1)]
             lt = start
             gt = end
-            m = start + 1
-            while m < gt:
-                '''
-                in the beginning, m cannot be equal or larger than gt, unless the list contains 0 or 1 element
-                if that were the case, the list will be returned as is
-                ''' 
-                if l[m] < pivot:
-                    '''
-                    if the current list-item is smaller than the pivot point, it already is on the correct side of the pivot
-                    so it can be put in the less-than partition
-                    in that case the lt-partition grows by one item, so the lt-marker moves to the right
-                    '''
-                    swap(l, m, lt)
-                    m += 1
-                    lt += 1
-                elif l[m] > pivot:
-                    gt -= 1
-                    swap(l, m, gt)
+            m = start
+            while m <= gt:
+                                    #compare current item with the pivot
+                if l[m] < pivot:    #if current item is smaller than the pivot
+                    swap(l, m, lt)  #swap it with the item at the lt-marker
+                    m += 1          #move on to ckeck next element
+                    lt += 1         #move lt-marker to the right, enlarging the lt-area
+                elif l[m] > pivot:  
+                    swap(l, m, gt)  #if the current item is larger than the pivot, swap it with the item at the gt marker
+                    gt -= 1         #move the gt marker to the left, enlarging the gt-area
                 else:
-                    m += 1
-                qsort_h(start, lt)
-                qsort_h(gt, end)
+                    m += 1          #if the current item is equal to the pivot, move on to the next element
+                                    #all items equal to the pivot will accumulate around the position of the pivot
+                                    #effectively generating an equal-area
 
-    qsort_h(0,len(l))
+            #recursively sort the items before and after the pivot.
+            qsort_h(start, lt - 1)
+            qsort_h(gt + 1, end)
+
+    qsort_h(0, len(l) - 1)
 
 def randlist(n) :
     '''
