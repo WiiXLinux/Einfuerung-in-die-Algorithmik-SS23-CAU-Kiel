@@ -1,0 +1,81 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[ngerman]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts} 
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand*{\qed}{\null\nobreak\hfill\ensuremath{\square}}
+\newcommand*{\puffer}{\text{ }\text{ }\text{ }\text{ }}
+\newcommand*{\lhop}{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily l'hop.}}}{=}}}
+
+\pagestyle{plain}
+\allowdisplaybreaks
+
+\title{Einführung in die Algorithmik - Hausaufgabenserie 2}
+\author{Nike Pulow, Henri Heyden\\ \small stu239549, stu240825}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\section*{Aufgabe 1.1}
+\subsection*{Landau-Klassen von $f$}
+\vspace{-0.5cm}
+\begin{flalign*}
+    g,h,f & \in \mathcal O(f) & \\
+    g,f & \in \Omega(f) & \\
+    g,f & \in \Theta(f) & \\
+    g,h,f & \in o(f) & \\
+    g,h,f & \not\in \omega(f) &
+\end{flalign*}
+\subsection*{Landau-Klassen von $g$}
+\vspace{-0.5cm}
+\begin{flalign*}
+    f,h,g & \in \mathcal O(f) & \\
+    f,g & \in \Omega(f) & \\
+    f,g & \in \Theta(f) & \\
+    h & \in o(f) & \\
+    f,h,g & \not\in \omega(f) &
+\end{flalign*}
+\subsection*{Landau-Klassen von $h$}
+\vspace{-0.5cm}
+\begin{flalign*}
+    h & \in \mathcal O(f) & \\
+    g,f,h & \in \Omega(f) & \\
+    h & \in \Theta(f) & \\
+    g,f,h & \not\in o(f) & \\
+    g,f & \in \omega(f) &
+\end{flalign*}
+\section*{Aufgabe 1.2}
+\subsection*{Zugehörigkeiten 1-3}
+Wir werden zeigen, dass \(f \in \Theta(f) \wedge f \in \mathcal O(f) \wedge f \in \Omega(f)\) gilt. \\
+Nach Vorlesung können wir dies zeigen, indem wir \(\lim_{x} \frac{f(x)}{f(x)}\) untersuchen. \\
+Beobachte: \(\lim_{x} \frac{f(x)}{f(x)} = \lim_{x} 1 = 1 =: p\).\\
+Daraus folgt: (1.): \(p < +\infty\), (2.): \(p > 0\) und (3.): 1.: \(0 < p < +\infty\). \\
+Diese Aussagen sind nach Vorlesung äquivalent zu:\\
+(1.): \(f \in \mathcal{O}(f)\), (2.): \(f \in \Omega(f)\) und (3.): \(f \in \Theta(f)\).\\
+Damit gilt, was zu zeigen war. \qed
+\subsection*{Zugehörigkeiten 4-5}
+Wir nehmen hier an, dass mit \(\log\) der Logarithmus zur Basis \(e\) gemeint ist. \\
+Wir werden zeigen, dass \(g \in \Omega(h) \wedge g \in \omega(h)\) gilt. \\
+Nach Vorlesung können wir dies zeigen, indem wir \(\lim_{x} \frac{g(x)}{h(x)}\) untersuchen. \\
+Siehe folgende Umformung:
+\begin{flalign*}
+    &\puffer \lim_{x} \frac{g(x)}{h(x)} & \text{| Setze ein in die Funktionen} \\
+    & = \lim_{x} \frac{12x^2-56}{24x\cdot log(5x)} & \text{| Ziehe einige Konstanten heraus} \\
+    & = \frac{4}{24} \cdot \lim_{x} \frac{3x^2-14}{x\cdot \log(5x)} & \text{| Wende Logarithmusgesetz an} \\
+    & = \frac{4}{24} \cdot \lim_{x} \frac{3x^2-14}{x\cdot (\log 5 + \log x)} & \text{| Wende die Regel von l'Hopital an} \\
+    & = \frac{4}{24} \cdot \lim_{x} \frac{6x}{\log 5 + \log x + 1} & \text{| Wende die Regel von l'Hopital erneut an} \\
+    & = \frac{4}{24} \cdot \lim_{x} \frac{6}{x^{-1}} & \text{| Bruchrechnung} \\
+    & = \frac{4}{24} \cdot \lim_{x} 6x \\
+    & = \frac{4}{24} \cdot +\infty \\
+    & = +\infty = p
+\end{flalign*}
+Daraus folgt: (1.): \(p > 0\) und (2.): \(p = +\infty\).
+Diese Aussagen sind nach Vorlesung äquivalent zu: (1.): \(g\in\Omega(h)\) und (2.): \(g\in\omega(h)\).\\
+Damit gilt, was zu zeigen war. \qed
+\end{document}
