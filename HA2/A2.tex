@@ -1,0 +1,78 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[ngerman]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts} 
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+
+\newcommand*{\qed}{\null\nobreak\hfill\ensuremath{\square}}
+\newcommand*{\puffer}{\text{ }\text{ }\text{ }\text{ }}
+\newcommand*{\lhop}{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily l'hop.}}}{=}}}
+
+\pagestyle{plain}
+\allowdisplaybreaks
+
+\title{Einführung in die Algorithmik - Hausaufgabenserie 2}
+\author{Nike Pulow, Henri Heyden\\ \small stu239549, stu240825}
+\date{}
+
+
+\begin{document}
+\maketitle
+\section*{Aufgabe 2}
+In der Präsenzübung wurde bereits gezeigt, dass bei einem vollständigen Binärbaum der Höhe \(h\) genau \(2^h\) Blätter vorliegen.
+Betrachte folgende Überlegung:\\
+Seien \(t_1\) und \(t_2\) vollständige Binärbaume der Höhe \(h-1\), dann gilt:\\
+\begin{tikzpicture}
+    \node[circle,draw](z){\(node\)}
+        child{node[circle,draw]{\(t_1\)} child{} child{}}
+        child{node[circle,draw]{\(t_2\)} child{} child{}};
+    \end{tikzpicture} \\
+... ist auch ein vollständiger Binärbaum. Dieser ist dann der Länge \(h\) und hat genau \(2^h\) Blätter, wie wir bereits wissen.\\
+Wir zeigen erst, dass die zwei Aussagen äquivalent sind, die wir beweisen wollen, wenn wir wissen, dass das erinnerte Verhalten über die Blätteranzahl anhand der Höhe gilt.
+Sei \(\mathcal K_n(t)\) eine Funktion, die einem Baum ihre Knotenanzahl übergibt. Sei \(\mathcal B_n(t)\) eine Funktion, die einem Baum ihre Blätteranzahl übergibt.
+Des weiteren nehme an, dass die beiden Aussagen, die wir beweisen wollen stimmen.
+Wir nennnen einen beliebigen vollständigen Binärbaum \(t\) der Höhe h, dann gilt:
+\begin{flalign*}
+    & \puffer \puffer \mathcal K_n(t) = \mathcal K_n(t) & \\
+    & \Longleftrightarrow 2^h - 1 = \mathcal B_n(t) - 1 & \\
+    & \Longleftrightarrow 2^h = \mathcal B_n(t) & \\
+    & \Longleftrightarrow \mathcal B_n(t) = \mathcal B_n(t) & \\
+    & \Longleftrightarrow wahr
+\end{flalign*}
+Somit müssen wir nur eine Eigenschaft zeigen, um die andere zu zeigen.
+\subsection*{Beweis mittels Bauminduktion}
+Definiere folgende Aussagen für die erwähnten Binärbaume \(t_1\), \(t_2\), einen beliebigen Binärbaum \(t\) und den zusammengesetzten Binärbaum \(t_0 := node(t_1,t_2)\): \\
+\textbf{(1.)}: \(\mathcal K_n(t) = \mathcal B_n(t) - 1\) \\
+\textbf{IA.}: \(\mathcal K_n(node(empty, empty)) = \mathcal B_n(node(empty, empty)) - 1\) \\
+\textbf{IH.}: \(\mathcal K_n(t_1) = \mathcal B_n(t_1) - 1 \wedge \mathcal K_n(t_2) = \mathcal B_n(t_2) - 1\)\\
+\textbf{IS.}: \(\mathcal K_n(t_1) = \mathcal B_n(t_1) - 1 \wedge \mathcal K_n(t_2) = \mathcal B_n(t_2) - 1 \Longrightarrow \mathcal K_n(t_0) = \mathcal B_n(t_0) - 1\)\\
+\subsubsection*{\textbf{IA.}}
+Wir werden nun den Induktionsanfang zeigen:
+\begin{flalign*}
+    & \puffer \puffer \mathcal K_n(node(empty, empty)) = \mathcal B_n(node(empty, empty)) - 1 & \text{| Setze ein}\\
+    & \Longleftrightarrow 1 = 2 - 1 & \text{| Rechne aus} \\
+    & \Longleftrightarrow wahr
+\end{flalign*}
+\subsubsection*{\textbf{IS.}}
+Wir werden nun den Induktionsschritt zeigen:\\
+\begin{tikzpicture}
+    \node[circle,draw](z){\(t_0\)}
+        child{node[circle,draw]{\(t_1\)} child{} child{}}
+        child{node[circle,draw]{\(t_2\)} child{} child{}};
+    \end{tikzpicture} \\
+Dann gilt:
+\begin{flalign*}
+    &  \puffer \mathcal K_n(t_0) & \text{| Definition von \(t_0\)}\\
+    & = K_n(node(t_1,t_2)) & \text{| Regeln in Binärbaumen} \\
+    & = \mathcal K_n(t_1) + \mathcal K_n(t_2) + 1 & \text{| \textbf{IH.}} \\
+    & = \mathcal B_n(t_1) - 1 + \mathcal B_n(t_2) - 1 + 1 & \text{| Rechne aus} \\
+    & = \mathcal B_n(t_1) + \mathcal B_n(t_2) - 1 & \text{| Def. \(t_0\) und Regeln in Binärbaumen} \\
+    & = \mathcal B_n(t_0) + 1
+\end{flalign*}
+Somit haben wir \textbf{IS.} und \textbf{IA.} gezeigt, also gilt \textbf{(1.)}.
+Da \textbf{(1.)} logisch äquivalent zu \(\mathcal K_n(t) = 2^h - 1\) ist, sind somit beide Eigenschaften gezeigt. \qed
+\end{document}
