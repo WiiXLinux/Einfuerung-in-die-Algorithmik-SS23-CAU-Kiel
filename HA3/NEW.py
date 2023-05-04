@@ -44,6 +44,11 @@ class Queue:
         Returns top (oldest) element of queue.
         :return: Top element
         """
+        # Is the queue empty?
+        # Then return None as it is empty.
+        if self.is_empty():
+            return None
+        # else return the top element.
         return self.list[0]
 
     def __str__(self):
