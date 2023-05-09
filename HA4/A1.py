@@ -14,12 +14,12 @@ class LeafTree:
         # Create empty temporary string.
         temp = ""
         # Convert the value of the leaf-tree, which is probably a list containing other lists, to a dictionary.
-        dict = LeafTree.list_to_depth_dict(self.list)
-        # Now we go through each key-value pair of the dict and convert each knot or leaf to a string.
-        for key in dict:
+        dic = LeafTree.list_to_depth_dict(self.list)
+        # Now we go through each key-value pair of the dic and convert each knot or leaf to a string.
+        for key in dic:
             isTwo = 1
-            # dict[key] is now a list containing all leafs or knots of one layer.
-            for item in dict[key]:
+            # dic[key] is now a list containing all leafs or knots of one layer.
+            for item in dic[key]:
                 temp += str(item) + " "
                 # If the current element is an even one, insert more distance between the next element.
                 # This symbolises the inheritance of the branches.
@@ -61,7 +61,7 @@ class LeafTree:
         # If we don't have a list for the current depth, we have to create the key-value pair.
         try:
             depth_dict[depth]
-        except:
+        except KeyError:
             depth_dict[depth] = []
 
         # If the list length is 1 (other case is list length equals to 2), we know that in lst[0] is an actual value
@@ -109,7 +109,7 @@ class LeafTree:
         temp = [0]
         to_return = LeafTree(None)
 
-        couter = 0
+        counter = 0
         print(range(max_val))
 
         to_return = LeafTree.branch()
