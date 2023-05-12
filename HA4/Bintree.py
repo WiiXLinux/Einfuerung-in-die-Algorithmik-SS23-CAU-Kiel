@@ -1,5 +1,5 @@
-class BinTree():
-
+# Copy of code in HA3/A4.py
+class BinTree:
     def __init__(self, left=None, value=None, right=None):
         '''
          constructs either an empty bintree or a node in a bintree with subtrees
@@ -7,7 +7,7 @@ class BinTree():
          call: BinTree() for empty BinTree
                BinTree(tl,v,tr) for node
          '''
-        if left == None:
+        if left is None:
             self.empty = True
         else:
             self.empty = False
@@ -15,6 +15,7 @@ class BinTree():
             self.value = value
             self.right = right
 
+    @staticmethod
     def node(left, value, right):
         '''
         statical method to construct a node in the bintree
@@ -26,6 +27,7 @@ class BinTree():
         tree.right = right
         return tree
 
+    @staticmethod
     def leaf(value):
         '''
         method construction a leaf, which is an abbreviation for a node with two
@@ -46,7 +48,7 @@ class BinTree():
 
     def arith_exp_to_str(self):
         '''
-        nicer representation, where leafs are printes instead of nodes 
+        nicer representation, where leafs are printes instead of nodes
         with empty subtrees
         '''
         if self.empty:
@@ -152,13 +154,6 @@ def next_pos(pos):
     return new_pos + 'l'
 
 
-def prev_pos(path):
-    '''
-    compute the previous position of a binary tree
-    '''
-    pass
-
-
 def positions(bin_tree):
     '''
     computes all positions in a given bin tree
@@ -172,7 +167,7 @@ def positions(bin_tree):
     # positions() recursively to get all positions
     else:
         # from the (current) root element go down the left side first
-        # for each element that was found in the left side branch
+        # for each element that was found on the left side branch
         # call positions() again
         left_pos = [pos + 'l' for pos in positions(bin_tree.left)]
 
@@ -182,15 +177,3 @@ def positions(bin_tree):
         # return all positions that are temporarily stored
         # within left_pos list and right_pos list
         return [''] + left_pos + right_pos
-
-
-tree = BinTree()
-pos = ''
-
-for i in range(9):
-    tree.update_tree_at(pos, BinTree.leaf(i))
-    pos = next_pos(pos)
-
-print(prev_pos('lll'))
-# print(positions(tree))
-# print(tree.arith_exp_to_str())
