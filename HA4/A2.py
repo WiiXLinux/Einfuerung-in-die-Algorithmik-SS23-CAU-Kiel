@@ -1,7 +1,6 @@
 import random
 
 from Bintree import BinTree
-from stack import Stack
 
 
 def max(tree: BinTree) -> int:
@@ -76,8 +75,10 @@ def random_bintree(size: int) -> BinTree:
 
 
 test = random_bintree(5)
-print(test)
-print(max(test))
+
+
+# print(test)
+# print(max(test))
 
 
 # For the next task we'll use the method given in the assigment:
@@ -87,7 +88,6 @@ def max2(nested_l):
     '''
 
     def max_h(nested_l):
-        print(nested_l)
         if type(nested_l) is list and len(nested_l) > 0:
             max_h(nested_l[0])
             max_h(nested_l[1:])
@@ -99,39 +99,85 @@ def max2(nested_l):
     max_h(nested_l)
     return max[0]
 
-# TODO: Comment, add more tests
-def max2_iter(nested_l):
-    stack = Stack()
-    stack.push(("max2", 0, [nested_l]))
-    result = 0
 
-    while not stack.is_empty():
+# TODO: Comment, add more tests
+def max2_iter(nested_l: list) -> int:
+    """
+    Iterative implementation of max2.
+    :param nested_l: Binary tree as list to be searched.
+    :return: Maximal value.
+    """
+    # We don't need no...
+    # list mutation...
+    nested_l = nested_l + []
+    # Create an empty stack to push and pop:
+    # operation keys, the number of missing arguments and inputs for the operations.
+    stack = []
+    # Push the operation to be completed with the required arguments.
+    # In the beginning no arguments are missing because we don't know yet that we will probably need more.
+    # As time unfolds, so will the operations.
+    stack.append(("max2", 0, [nested_l]))
+    # Result will carry the result of all operations.
+    # Will return to None when there is a method called that doesn't change the result,
+    # like for example the list splitting in recursive mergesort.
+    result = None
+    # Initiate a temporary result with 0.
+    # Because in the original max2 there was assumed that the minimal value is 0, we will here too.
+    tmpmax = 0
+    # Repeat following steps until there are no calculations to be made.
+    while len(stack) > 0:
+        # Receive ToS.
         fun, missing_args, args = stack.pop()
-        assert missing_args == 0
+        # This should be the case since the only method we "call" in our implementation is max2.
+        # The Exception in line 152 is with that fact basically a detector for cosmic radiation.
         if fun == "max2":
+            # Get basically the nested_l that would be given by a recursive call. Just using args is also ok, but
+            # this makes it a bit more readable, what we're doing.
             nested_l = args
+            # This is the same as before, we look if nested_l is still a list containing more than 0 objects,
+            # We have to "call" max2 again in the future.
             if type(nested_l) is list and len(nested_l) > 0:
-                stack.push(("max2", 0, nested_l[0]))
-                stack.push(("max2", 0, nested_l[1:]))
-                result = 0
-            # Here we've shortened the original expression a bit.
-            elif type(nested_l) is int and nested_l > result:
+                # We're doing this by pushing the arguments needed, as well as their operations and missing arguments
+                # (which are both 0 after calculation), to the stack. We also have to swap the order of operations.
+                stack.append(("max2", 0, nested_l[1:]))
+                stack.append(("max2", 0, nested_l[0]))
+                # Reset result to the value of this calculation which is None.
+                result = None
+            # Here we've shortened the original expression a bit. Still does the same...
+            elif type(nested_l) is int and nested_l > tmpmax:
+                # Basically returning nested_l.
                 result = nested_l
+                # Update tmpmax
+                tmpmax = result
+        # This here is the cosmic radiation detector we mean.
         else:
-            raise Exception("Something went tits up with the golden order")
-        if result is None:
-            if not stack.is_empty():
+            raise Exception("Unknown operation: " + fun + "\nsomething went really really wrong if you see this...")
+        # If the last calculation didn't "return" anything, we have to swap two operations.
+        if result is not None:
+            # If there are still calculations to be made:
+            if len(stack) > 0:
+                # We prepare the parent function, missing arguments number and arguments
+                # to swap them with the current ToS.
                 pfun, pmissing_args, pargs = stack.pop()
                 if pmissing_args == 1:
-                    stack.push((pfun, 0, pargs + [result]))
+                    # We know there should not be any arguments more left at this point for the function
+                    # that we want to execute, so we don't write "pmissing_args - 1"
+                    stack.append((pfun, 0, pargs + [result]))
                 else:
+                    # If not, we just swap the parents with their parents that turn into their children...
                     nextsubcomp = stack.pop()
-                    stack.push((pfun, pmissing_args - 1, pargs + [result]))
-                    stack.push(nextsubcomp)
-
+                    stack.append((pfun, pmissing_args - 1, pargs + [result]))
+                    stack.append(nextsubcomp)
+    # Now we finally have our result.
+    result = tmpmax
     return result
 
 
+# Here are some tests:
 test2 = [[2, 3, [6]], 4, [2, 5], []]
-print(max2(test2))
-print(max2_iter(test2))
+test3 = [[2, 3, [4]], 4, [2, 5], [], [[[[5, 3, [9]], 4, [2, 5], [], 3, [6]], 4, [2, 5], []], [2, 24, [20]], 4, [2, 5]]]
+test4 = [[2], [[5], [[1], [9]]], [2, 5], [], [[[[5, 3, [9]], 4, [2, 5], [], 3, [6]]]]]
+
+assert max2(test2) == max2_iter(test2)  # -> 6
+assert max2(test3) == max2_iter(test3)  # -> 24
+assert max2(test4) == max2_iter(test4)  # -> 9
