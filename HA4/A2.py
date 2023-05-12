@@ -73,3 +73,5 @@ def random_bintree(size: int) -> BinTree:
 test = random_bintree(5)
 print(test)
 print(max(test))
+
+
