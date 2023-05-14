@@ -1,7 +1,8 @@
 import copy
+import sys
 
 # Sorry, aber ich kann listen zum Debuggen besser lesen als die stacks aus der vorlesung, weil dessen str methode scheiße ist.
-from stack import Stack
+# from stack import Stack
 
 
 def bla(n):
@@ -24,7 +25,7 @@ def blablub(n):
 
     res = None  # r
     while not stack == []:
-        print("beginning\t\t", stack)
+        #print("beginning\t\t", stack)
         fun, missing_args, args = stack.pop()
         assert missing_args == 0
 
@@ -50,7 +51,8 @@ def blablub(n):
         elif fun == '+':
             res = 1 + args[0]
 
-        print("second\t\t\t", stack, res)
+        #print("second\t\t\t", stack, res)
+        # Das hier, brachst du nur zum Verstehen, deswegen entferne danach auch den import von copy.
         c = copy.deepcopy(stack)
         r = copy.copy(res)
 
@@ -65,10 +67,21 @@ def blablub(n):
                     stack.append(next_call)
 
         if not c == stack or not r == res:
-            print("after third\t\t", stack, res)
+            #print("after third\t\t", stack, res)
+            pass
 
     return res
 
 
-print(blablub(3), bla(3))
-#for i in range(10): print(bla(i), blablub(i))
+#print(blablub(3), bla(3))
+for i in range(100):
+    a = 0
+    try:
+        a = bla(i)
+    except RecursionError as RE7:
+        print("with n = " + str(i) + "\nthe old implementation fails due to the recursion depth being too big.", file=sys.stderr)
+        exit(i)
+
+    b = blablub(i)
+
+    print("bla("+str(i)+") =" + str(a) + "\t\t" + "blablub("+str(i)+") =", b)
