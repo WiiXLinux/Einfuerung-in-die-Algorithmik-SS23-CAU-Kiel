@@ -1,47 +1,63 @@
 from stack import Stack
 
+
+def bla(n):
+    if n == 0:
+        return 1
+    else:
+        return 2 * blub(bla(n - 1), 1)
+
+
+def blub(n, r):
+    if n == 0:
+        return r
+    else:
+        return 1 + blub(n - 1, r)
+
+
 def blablub(n):
-    stack = Stack()
-    stack.push(('bla',0,[n]))
-    
-    res = None #r
-    while stack.top() != None:
+    stack = []
+    stack.append(('bla', 0, [n]))
+
+    res = None  # r
+    while not stack == []:
+        #print(stack)
         fun, missing_args, args = stack.pop()
+        assert missing_args == 0
 
         if fun == 'bla':
-            print(stack)
             n = args[0]
             if n == 0:
-               res = 1
+                res = 1
             else:
-               stack.push(('*',1,[]))
-               stack.push(('blub',1,[1]))
-               stack.push(('bla',0,[n-1]))
+                stack.append(('*', 1, []))
+                stack.append(('blub', 1, [1]))
+                stack.append(('bla', 0, [n - 1]))
+                res = None
         elif fun == 'blub':
-            print(stack)
-            #n = args[0]
+            # n = args[0]
             if n == 0:
-               res = 1
+                res = args[1]
             else:
-               stack.push(('+',1,[]))
-               stack.push(('blub',0,[res,n-1]))
+                stack.append(('+', 1, []))
+                stack.append(('blub', 0, [res, n - 1]))
         elif fun == '*':
-            print(stack)
-            res = 2 * res
+            res = 2 * args[0]
         elif fun == '+':
-            print(stack)
             res = 1 + args[0]
-           
-        if res != None: 
-            if not stack.is_empty():
-                parent, missing_args, args = stack.pop()
-                if missing_args == 1: 
-                    stack.push((parent, 0, res))
+
+        if res != None:
+            if not stack == []:
+                pfun, missing_args, args = stack.pop()
+                if missing_args == 1:
+                    stack.append((pfun, 0, args + [res]))
                 else:
                     next_call = stack.pop()
-                    stack.push((parent, missing_args, args + [res]))
-                    stack.push((next_call))
+                    stack.append((pfun, missing_args - 1, args + [res]))
+                    stack.append(next_call)
 
     return res
 
-print(blablub(2))
+
+for i in range(10):
+    print(bla(i), blablub(i))
