@@ -1,0 +1,67 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[ngerman]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts} 
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{titling}
+
+\newcommand*{\qed}{\null\nobreak\hfill\ensuremath{\square}}
+\newcommand*{\puffer}{\text{ }\text{ }\text{ }\text{ }}
+\newcommand*{\lhop}{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily l'hop.}}}{=}}}
+
+\pagestyle{plain}
+\allowdisplaybreaks
+
+\setlength{\droptitle}{-10em}
+
+\title{Einführung in die Algorithmik - Hausaufgabenserie 5}
+\author{Nike Pulow, Henri Heyden\\ \small stu239549, stu240825}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\section*{Aufgabe 1}
+\subsection*{b)}
+Wir betrachten einen AVL-Baum, wessen Balance im Wurzelknoten, den wir \(x\) nennen werden, -2 ist.
+Wir definieren hierfür folgende Teilbäume und Knoten des gesamten Binärbaums:\\
+\(y\) definieren wir als linken Knoten von \(x\).
+Der Wurzelknoten des Teilbaums \(T_1\) mit Höhe \(h\) ist linker Knoten von \(y\).\\
+\(y\) hat als rechten Knoten \(z\), welcher die Wurzelknoten von den Teilbäumen \(T_2\) und \(T_3\) (von links nach rechts) besitzt. Des Weiteren hat \(x\) noch als rechten Knoten den Wurzelknoten des letzten Teilbaums \(T_4\)\\
+\(x\) hat die Balance -2, \(y\) hat die Balance 1, \(z\) hat drei mögliche Balancen: -1, 0 oder 1. Um alle Fälle abzudecken, schreiben wir deswegen in dieser Reihenfolge die Resultate, die aus diesen Balancen entstehen.\\
+Die folgende Darstellung visualisiert unseren Baum:\\
+\begin{center}
+\begin{tikzpicture}
+    \node{\(x\) (-2)}
+        child{node{\(y\) (1)}
+            child{node{\(T_1\)}} child{node{\(z\) (-1/0/1)}
+                child{node{\(T_2\)}} child{node{\(T_3\)}}}}
+        child{node{\(T_4\)}};
+\end{tikzpicture}
+\end{center}
+Da \(T_1\) die Höhe \(h\) und \(y\) die Balance 1 haben, wissen wir, dass \(z\) die Höhe \(h + 1\) hat. Daraus folgt, dass \(y\) die Höhe \(h+2\) hat.\\
+Da \(x\) die Balance -2 hat, folgt, dass \(T_4\) die Höhe \(h\) hat. Insgesamt hat \(x\) also die Höhe \(h+3\).\\
+Da \(z\) die Balancen (-1/0/1) hat und \(z\) die Höhe \(h+1\) hat, müssen \(T_2\) und \(T_3\) die Höhen \(h\) und \(h-1\) bzw. \(h\) und \(h\) bzw. \(h-1\) und \(h\) haben.
+Beachte, dass dieser Baum, sowie alle Teilbäume AVL-Bäume sind.\\
+Wenn wir die LR-Rotation anwenden, sieht der resultierende Baum so aus:
+\begin{center}
+    \begin{tikzpicture}
+
+        \node{\(z\)}
+            child{node{\(y\)}
+                child{node{\(T_1\)}} child{node[xshift=-0.5cm]{\(T_2\)}}}
+            child{node{\(x\)}
+                child{node[xshift=+0.5cm]{\(T_3\)}} child{node{\(T_4\)}}};
+    \end{tikzpicture}
+    \end{center}
+Die Höhen von den Teilbäumen \(T_1\) bis \(T_4\) bleiben gleich.\\
+Beobachte, dass \(T_2\) und \(T_3\) maximal \(h\) als Höhe haben. Da ihre "Geschwister", also \(T_1\) bzw. \(T_4\) beide die Höhen \(h\) haben, folgt daraus, dass \(y\) und \(x\) genau die Höhe \(h+1\) nach der LR-Rotation haben, egal welchen Fall wir betrachten. \\
+Somit ist die Höhe von unserem AVL-Baum genau \(h+2\), was um genau 1 kleiner ist, als die Höhe vor der Rotation. Dies deckt somit alle Fälle der LR-Rotation ab, und alles, was zu zeigen war, wurde gezeigt. \qed
+\subsection*{b)}
+In  \textbf{a)} haben wir bereits festgestellt, dass die Höhen von \(y\) und \(x\) gleich sind, weswegen auch die Balance von \(z\) genau 0 ist. \qed
+\end{document}
