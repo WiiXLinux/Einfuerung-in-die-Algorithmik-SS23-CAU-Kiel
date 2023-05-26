@@ -110,7 +110,6 @@ class Heap():
         i = 1
         left = i * 2 + 1
         right = left + 1
-        cont = True
         #if the value is the first or last element in the heap
         #easy to delete
         if self.heap[0] == value:
@@ -120,7 +119,7 @@ class Heap():
             self.heap.pop(len(self.heap)-1)
             return True
         #now check all other elements
-        while cont and right < len(self.heap):
+        while right < len(self.heap):
             if self.heap[i] == value:
                 #pop element on position
                 self.heap[i] = self.heap[len(self.heap)-1]
@@ -130,7 +129,7 @@ class Heap():
                 return True
             elif self.heap[right] == value:
                 #pop element on position
-                self.heap[i] = self.heap[len(self.heap)-1]
+                self.heap[right] = self.heap[len(self.heap)-1]
                 #heapify_down largest element
                 self.heap.pop(len(self.heap)-1)
                 self.__heapify_down(right)
@@ -145,12 +144,18 @@ class Heap():
             #if the value looked for is smaller than the value
             #of a given node, it is safe to say that the value
             #will not be in one of its subtrees
-            if value < self.heap[left]:
-                i += 1
-                left = i*2 +1
-                right = left +1
-            elif value < self.heap[right]:
-                i += 1
+            if value < self.heap[i]:
+                if self.heap[right] == value:
+                    self.heap[right] = self.heap[len(self.heap)-1]
+                    self.heap.pop(len(self.heap)-1)
+                    self.__heapify_down(right)
+                    return True
+                elif self.heap[left] == value:
+                    self.heap[left] = self.heap[len(self.heap)-1]
+                    self.heap.pop(len(self.heap)-1)
+                    self.__heapify_down(left)
+                    return True
+                i += 2
                 left = i*2 +1
                 right = left +1
             else:
@@ -199,8 +204,8 @@ def rand_list(n):
     return res
 
 heap = Heap()
-#l = [13, 9, 6, 13, 7, 12, 15, 17, 3,54,23,99,23,16,78,24,18,36,72,36]
-l = rand_list(10)
+l = [13, 9, 6, 13, 7, 12, 15, 17]
+#l = rand_list(15)
 
 for x in l:
     heap.add(x)
@@ -215,8 +220,9 @@ for x in l:
         res.append(heap.extract_min())
     return res'''
 
-print(heap.elem(20))
+#print(heap.elem(20))
 #print(heap.elem2(24))
-#print(heap.delete(24))
+print(heap)
+print(heap.delete(6))
 #heap.delete_at(3)
 print(heap)

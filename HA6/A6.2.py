@@ -60,16 +60,14 @@ class Heap():
             #if the value looked for is smaller than the value
             #of a given node, it is safe to say that the value
             #will not be in one of its subtrees
-            if value < self.heap[left]:
-                i += 1
-                left = i*2 +1
-                right = left +1
-            elif value < self.heap[right]:
-                i += 1
+            if value < self.heap[i]:
+                if self.heap[right] == value or self.heap[left] == value:
+                    return True
+                i += 2
                 left = i*2 +1
                 right = left +1
             else:
-                i+=1
+                i += 1
                 left = i*2 +1
                 right = left +1
         return False
