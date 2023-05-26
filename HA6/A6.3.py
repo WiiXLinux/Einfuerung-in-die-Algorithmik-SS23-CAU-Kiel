@@ -76,7 +76,6 @@ class Heap():
         left = i * 2 + 1
         right = left + 1
         cont = True
-        counter = 0
         #check the first and the last element first
         if self.heap[0] == value:
             return True
@@ -84,70 +83,21 @@ class Heap():
             return True
         #now check all other elements
         while cont and right < len(self.heap):
-            counter += 1
             if self.heap[i] == value or self.heap[right] == value or self.heap[left] == value:
-                print(counter)
                 return True
             #if the value looked for is smaller than the value
             #of a given node, it is safe to say that the value
             #will not be in one of its subtrees
             if value < self.heap[i]:
                 if self.heap[right] == value or self.heap[left] == value:
-                    print(counter)
                     return True
                 i += 2
                 left = i*2 +1
                 right = left +1
-                '''elif value < self.heap[right]:
-                    if self.heap[left] == value:
-                        return True
-                    i += 2
-                    left = i*2 +1
-                    right = left +1'''
             else:
                 i += 1
                 left = i*2 +1
                 right = left +1
-        print(counter)
-        return False
-    
-    def elem2(self,value):
-        '''
-        method to check whether a value exists within a heap
-        returns True if the value exists, returns False if it doesn't
-        '''
-        i = 1
-        left = i * 2 + 1
-        right = left + 1
-        cont = True
-        counter = 0
-        #check the first and the last element first
-        if self.heap[0] == value:
-            return True
-        if self.heap[len(self.heap)-1] == value:
-            return True
-        #now check all other elements
-        while cont and right < len(self.heap):
-            counter += 1
-            if self.heap[right] == value or self.heap[left] == value:
-                print(counter)
-                return True
-            #if the value looked for is smaller than the value
-            #of a given node, it is safe to say that the value
-            #will not be in one of its subtrees
-            if value < self.heap[left]:
-                i += 1
-                left = i*2 +1
-                right = left +1
-            elif value < self.heap[right]:
-                i += 1
-                left = i*2 +1
-                right = left +1
-            else:
-                i += 1
-                left = i*2 +1
-                right = left +1
-        print(counter)
         return False
 
     def delete(self, value):
@@ -250,7 +200,7 @@ def rand_list(n):
 
 heap = Heap()
 #l = [13, 9, 6, 13, 7, 12, 15, 17, 3,54,23,99,23,16,78,24,18,36,72,36]
-l = rand_list(100)
+l = rand_list(10)
 
 for x in l:
     heap.add(x)
@@ -265,8 +215,8 @@ for x in l:
         res.append(heap.extract_min())
     return res'''
 
-print(heap.elem(24))
-print(heap.elem2(24))
+print(heap.elem(20))
+#print(heap.elem2(24))
 #print(heap.delete(24))
 #heap.delete_at(3)
 print(heap)
