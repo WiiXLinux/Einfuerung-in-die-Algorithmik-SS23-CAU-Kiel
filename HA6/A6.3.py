@@ -1,6 +1,3 @@
-#TODO:
-#delete()
-
 class Heap():
 
     def __init__(self):
@@ -111,32 +108,57 @@ class Heap():
         returns false if the value did not exists in
         the heap and therefore could not be deleted
         '''
-        i = 0
+        i = 1
         left = i * 2 + 1
-        right = left + 1 #2
+        right = left + 1
         cont = True
+        #if the value is the first or last element in the heap
+        #easy to delete
+        if self.heap[0] == value:
+            self.extract_min()
+            return True
+        if self.heap[len(self.heap)-1] == value:
+            self.heap.pop(len(self.heap)-1)
+            return True
+        #now check all other elements
         while cont and right < len(self.heap):
-            print(i)
-            if self.heap[left] < value:
-                print('in left loop')
-                i += 1
-                left = i*2 +1
-                right = left+1
-            elif self.heap[right] < value:
-                print('in right loop')
-                i += 1
-                left = i*2 +1
-                right = left+1
-            elif self.heap[i] == value:
-                self.heap[i].pop()
-                cont = False
+            if self.heap[i] == value:
+                #pop element on position
+                self.heap[i] = self.heap[len(self.heap)-1]
+                #heapify_down largest element
+                self.heap.pop(len(self.heap)-1)
+                self.__heapify_down(i)
                 return True
+            elif self.heap[right] == value:
+                #pop element on position
+                self.heap[i] = self.heap[len(self.heap)-1]
+                #heapify_down largest element
+                self.heap.pop(len(self.heap)-1)
+                self.__heapify_down(right)
+                return True
+            elif self.heap[left] == value:
+                #pop element on position
+                self.heap[left] = self.heap[len(self.heap)-1]
+                #heapify_down largest element
+                self.heap.pop(len(self.heap)-1)
+                self.__heapify_down(left)
+                return True
+            #if the value looked for is smaller than the value
+            #of a given node, it is safe to say that the value
+            #will not be in one of its subtrees
+            if value < self.heap[left]:
+                i += 1
+                left = i*2 +1
+                right = left +1
+            elif value < self.heap[right]:
+                i += 1
+                left = i*2 +1
+                right = left +1
+            else:
+                i+=1
+                left = i*2 +1
+                right = left +1
         return False
-                
-
-                
-
-
 
     def add(self,v):
         self.heap.append(v)     # constant runtime
@@ -194,5 +216,6 @@ for x in l:
         res.append(heap.extract_min())
     return res'''
 
-heap.delete(7)
+print(heap.delete(24))
+#heap.delete_at(3)
 print(heap)
