@@ -45,8 +45,8 @@ class Heap():
         '''
         #positions are given via the index
         #make sure the position exists
-        if pos == len(self.heap):
-            self.extract_min()
+        if pos == len(self.heap) - 1:
+            self.heap.pop()
         elif pos < len(self.heap):
             #pop element on position
             temp = self.heap[pos]
@@ -223,6 +223,6 @@ for x in l:
 #print(heap.elem(20))
 #print(heap.elem2(24))
 print(heap)
-print(heap.delete(6))
-#heap.delete_at(3)
+#print(heap.delete(6))
+heap.delete_at(7)
 print(heap)
