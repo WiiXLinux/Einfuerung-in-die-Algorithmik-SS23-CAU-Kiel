@@ -1,0 +1,39 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[ngerman]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts} 
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{titling}
+
+\newcommand*{\qed}{\null\nobreak\hfill\ensuremath{\square}}
+\newcommand*{\puffer}{\text{ }\text{ }\text{ }\text{ }}
+\newcommand*{\lhop}{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily l'hop.}}}{=}}}
+
+\pagestyle{plain}
+\allowdisplaybreaks
+
+\setlength{\droptitle}{-10em}
+
+\title{Einführung in die Algorithmik - Hausaufgabenserie 6}
+\author{Nike Pulow, Henri Heyden\\ \small stu239549, stu240825}
+\date{}
+
+
+\begin{document}
+\maketitle
+\section*{Aufgabe 3}
+\subsection*{Laufzeitanalyse von delete\_at}
+\textbf{Best case:}\\
+Es gibt mehrere Fälle, bei denen eine Laufzeit von \(\mathcal O(1)\) vorkommt. \\
+Der kürzeste ist bei uns der Fall \(pos == len(self.heap) - 1\). \\
+Hier soll das letzte Element des Heaps entfernt werden. Da wir dann dieses einfach streichen können, müssen wir nicht \_\_heapify\_down aufrufen, sondern können einfach das letzte Element poppen und wir sind fertig. \\
+\textbf{Average case:}\\
+Im average case müssen wir \_\_heapify\_down aufrufen. \_\_heapify\_down hat eine Laufzeit von höchstens \(\mathcal O(n)\) nach Vorlesung.\\
+\textbf{Worst case:}\\
+Der worst case ist ähnlich zum average case, jedoch ist hier die Laufzeit genau \(\mathcal O(n)\), da \(cont\) nie \(False\) gesetzt wird und das Programm so lange läuft, bis \(right >= len(self.heap)\) gilt.\\
+Das heißt, dass wir nicht aus der while Schleife herausbrechen bis wir komplett den längsten \_\_heapify\_down ausgeführt haben.
+\end{document}
