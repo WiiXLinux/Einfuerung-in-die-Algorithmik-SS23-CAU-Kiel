@@ -226,3 +226,22 @@ print(heap)
 #print(heap.delete(6))
 heap.delete_at(7)
 print(heap)
+
+"""
+Laufzeitanalyse von delete_at
+Best case:
+Es gibt mehrere Fälle, bei denen eine Laufzeit von O(1) vorkommt.
+Der kürzeste ist bei uns der Fall pos == len(self.heap) − 1.
+Hier soll das letzte Element des Heaps entfernt werden. Da wir dann dieses
+einfach streichen können, müssen wir nicht __heapify_down aufrufen, son-
+dern können einfach das letzte Element poppen und wir sind fertig.
+Average case:
+Im average case müssen wir __heapify_down aufrufen. __heapify_down
+hat eine Laufzeit von höchstens O(n) nach Vorlesung.
+Worst case:
+Der worst case ist ähnlich zum average case, jedoch ist hier die Laufzeit ge-
+nau O(n), da cont nie F alse gesetzt wird und das Programm so lange läuft,
+bis right >= len(self.heap) gilt.
+Das heißt, dass wir nicht aus der while Schleife herausbrechen bis wir kom-
+plett den längsten __heapify_down ausgeführt haben.
+"""
