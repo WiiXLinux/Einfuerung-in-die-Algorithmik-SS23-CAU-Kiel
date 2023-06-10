@@ -1,5 +1,23 @@
 from max_heap import Heap
 
+"""
+Teilaufgabe 1:
+Das Problem ließe sich leicht mit Laufzeit O(n · log(n)) lösen, indem man
+einen beliebigen Algorithmus (der Laufzeit von O(n · log(n)) hat), wie zum
+Beispiel Heapsort verwendet, um die Liste zu sortieren und dann einfach das
+k-te Element zurückgibt.
+Das Zugreifen auf das k-te Element hat konstante Laufzeit.
+"""
+
+"""
+Teilaufgabe 2:
+Ein ähnlicher Algorithmus ließe sich schneller Implementieren, indem man
+statt wie in Heapsort alle Elemente des Heaps wieder extrahiert, einfach
+genau k Mal die Elemente extrahiert und beim letzten Mal das Element
+zurückgibt.
+Die Laufzeitanalyse für diesen Algorithmus ist in seiner folgenden Implementierung.
+"""
+
 
 def k_largest_element(l: list[int], k: int) -> int:
     """
